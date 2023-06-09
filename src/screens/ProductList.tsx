@@ -1,11 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   View,
   Text,
   FlatList,
-  ActivityIndicator,
   TouchableOpacity,
   Modal,
 } from "react-native";
@@ -112,7 +110,7 @@ export default function ProductList() {
                 color: "#ECEFF1",
               }}
             >
-              {filter ? filter.filterName: ""}
+              {filter ? filter.filterName : ""}
             </Animatable.Text>
           </View>
         </Animatable.View>
@@ -131,7 +129,7 @@ export default function ProductList() {
                   color: "#A1A1A1",
                   fontSize: 20,
                   textAlign: "center",
-                  marginTop: '60%'
+                  marginTop: "60%",
                 }}
               >
                 {emptyList}

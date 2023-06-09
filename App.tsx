@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { AppProvider } from "./src/contexts/auth";
 import { NavigationContainer } from "@react-navigation/native";
-import { View } from "react-native";
 
 import Toast from "react-native-toast-message";
 

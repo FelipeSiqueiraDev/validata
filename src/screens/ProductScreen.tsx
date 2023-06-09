@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contexts/auth";
+import { useState } from "react";
 import { TextInputMask } from "react-native-masked-text";
 import {
   StyleSheet,
@@ -339,7 +338,7 @@ const styles = StyleSheet.create({
   notFoundMessage: {
     color: "#ECA400",
     fontSize: 13,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
     fontWeight: "bold",
     marginLeft: 5,
   },

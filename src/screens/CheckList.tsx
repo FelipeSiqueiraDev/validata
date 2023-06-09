@@ -1,18 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contexts/auth";
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet, View, Text, FlatList } from "react-native";
 
 import * as Animatable from "react-native-animatable";
 
 import { api } from "../services/axios";
 import CheckProductCard from "../components/CheckProductCard";
-import { AppSettingsContext } from "../contexts/settings";
 
 export type checkProps = {
   AtualizacaoDadosSistemaDt: string;
@@ -32,7 +24,6 @@ export type checkProps = {
 
 export default function CheckList() {
   const [checkList, setCheckList] = useState<checkProps[]>();
-  /*const { company } = useContext(AppSettingsContext);*/
   const [emptyList, setEmptyList] = useState("Carregando...");
 
   async function getCheckList() {
@@ -85,20 +76,20 @@ export default function CheckList() {
           showsVerticalScrollIndicator={false}
           style={{ marginTop: 10 }}
           ListEmptyComponent={
-              <Animatable.Text
-                animation={"rubberBand"}
-                duration={2000}
-                style={{
-                  alignSelf: "center",
-                  color: "#A1A1A1",
-                  fontSize: 20,
-                  textAlign: "center",
-                  marginTop: '60%'
-                }}
-              >
-                {emptyList}
-              </Animatable.Text>
-            }
+            <Animatable.Text
+              animation={"rubberBand"}
+              duration={2000}
+              style={{
+                alignSelf: "center",
+                color: "#A1A1A1",
+                fontSize: 20,
+                textAlign: "center",
+                marginTop: "60%",
+              }}
+            >
+              {emptyList}
+            </Animatable.Text>
+          }
           keyExtractor={(product) => String(product.RelatoValidadeId)}
           renderItem={({ index, item: product }) => (
             <CheckProductCard product={product} index={index} />

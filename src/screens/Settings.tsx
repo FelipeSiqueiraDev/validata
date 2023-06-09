@@ -17,10 +17,8 @@ import { Dropdown } from "react-native-element-dropdown";
 
 import Toast from "react-native-toast-message";
 
-import saveCompanyCredentials from "../storage/company/saveCompany.credentials";
 import { useNavigation } from "@react-navigation/native";
 import LogoutModal from "../components/LogoutModal";
-import getCompanyCredentials from "../storage/company/getCompany.credentials";
 
 import { useContext } from "react";
 import { AppSettingsContext } from "../contexts/settings";

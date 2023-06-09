@@ -1,6 +1,3 @@
-import { NavigationContainer } from "@react-navigation/native";
-
-import AppScreens from "./AppScreens.routes";
 import InitialScreens from "./InitialScreens.routes";
 
 import { useContext } from "react";

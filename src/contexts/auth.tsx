@@ -1,10 +1,11 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { userProps } from "../screens/Login";
 import { api } from "../services/axios";
+
 import saveUserCredentials from "../storage/user/saveUser.credentials";
 import getUserCredentials from "../storage/user/getUser.credentials";
 import deleteUserCredentials from "../storage/user/deleteUser.credentials";
-import { companyProps } from "../screens/Settings";
+
 import Toast from "react-native-toast-message";
 
 type UserContextData = {

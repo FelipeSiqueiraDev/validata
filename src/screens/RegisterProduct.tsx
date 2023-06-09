@@ -109,14 +109,15 @@ export default function RegisterProduct() {
     const actualMonth = String(today.getMonth() + 1).padStart(2, "0");
     const ActualYear = today.getFullYear();
 
-    const quantityVerify = Number(productData.productQtd)
+    const quantityVerify = Number(productData.productQtd);
 
-    if(quantityVerify <= 0) {
+    if (quantityVerify <= 0) {
       setLoading(false);
       Toast.show({
         type: "error",
         text1: "Parece que tem algo errado com a quantidade de registro",
-        text2: "Caso não tenha encontrado os produtos, clique em 'Produtos não encontrados' abaixo.",
+        text2:
+          "Caso não tenha encontrado os produtos, clique em 'Produtos não encontrados' abaixo.",
       });
       return;
     }

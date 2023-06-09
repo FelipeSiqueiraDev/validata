@@ -1,8 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import AppScreens from "./AppScreens.routes";
 import ProductScreen from "../screens/ProductScreen";
 import { AppSettingsProvider } from "../contexts/settings";
-import { ActivityIndicator } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 const { Navigator, Screen } = createStackNavigator();
 
