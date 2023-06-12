@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -17,6 +17,7 @@ import { productProps } from "./RegisterProduct";
 import ProductCard from "../components/ProductCard";
 import FilterModal from "../components/FilterModal";
 import { AppSettingsContext } from "../contexts/settings";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ProductList() {
   const [validateList, setValidateList] = useState<productProps[]>();
@@ -34,6 +35,7 @@ export default function ProductList() {
             StatusId: ["0"],
             EmpresaId: [String(company?.EmpresaId)],
           },
+          Sort: ["SecaoLabel"],
           Take: 20,
         });
       } else {
@@ -43,6 +45,7 @@ export default function ProductList() {
             EmpresaId: [String(company?.EmpresaId)],
             SecaoId: [String(filter?.filterId)],
           },
+          Sort: ["SecaoLabel"],
           Take: 20,
         });
       }
@@ -65,13 +68,13 @@ export default function ProductList() {
     }
   }
 
-  useEffect(() => {
+  useFocusEffect(() => {
     getValidateList();
 
     setTimeout(() => {
       setEmptyList("Esta lista parece estar vazia =(");
     }, 10000);
-  }, []);
+  });
 
   return (
     <>
@@ -105,7 +108,9 @@ export default function ProductList() {
               animation={"fadeInLeft"}
               style={{
                 width: "100%",
+                marginTop: 10,
                 height: 20,
+                fontSize: 8,
                 textAlign: "center",
                 color: "#ECEFF1",
               }}

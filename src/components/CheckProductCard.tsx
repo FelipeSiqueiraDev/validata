@@ -50,7 +50,7 @@ export default function CheckProductCard({ product, index }: cardProps) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 150,
+    height: 160,
     backgroundColor: "#393B41",
     borderWidth: 1,
     borderColor: "#ECA400",

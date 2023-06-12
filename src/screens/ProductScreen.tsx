@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextInputMask } from "react-native-masked-text";
 import {
   StyleSheet,
@@ -29,6 +29,7 @@ type validateProps = {
 export default function ProductScreen() {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [ean, setEan] = useState(true)
 
   const navigation = useNavigation();
   const data = useRoute();
@@ -137,6 +138,16 @@ export default function ProductScreen() {
     }
   }
 
+  function eanVerify(){
+    if (String(prodData.ProdutoEan) == "0000000000000"){
+      setEan(false)
+    }
+  }
+
+  useEffect(() => {
+    eanVerify()
+  }, [])
+
   return (
     <View style={styles.container}>
       <Animatable.View
@@ -154,6 +165,10 @@ export default function ProductScreen() {
 
       <Animatable.View animation={"fadeInUp"} style={styles.listContainer}>
         <Text style={styles.message}>{prodData.ProdutoNome}</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
+          <Text style={[styles.info, {marginRight: 40}]}>Cod.: {prodData.ProdutoId}</Text>
+          <Text style={styles.info}>{ean ? `Ean.: ${prodData.ProdutoEan}` : ""}</Text>
+        </View>
         <View>
           <Text style={[styles.label, { marginTop: 50 }]}>Quantidade</Text>
           <Controller
@@ -296,6 +311,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#A1A1A1",
     marginRight: 30,
+  },
+  info: {
+    fontSize: 12,
+    color: "#A1A1A1",
   },
   label: {
     fontSize: 20,

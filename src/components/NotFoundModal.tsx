@@ -44,6 +44,7 @@ export default function NotFoundModal({
         text1: "Relato enviado com sucesso!",
         text2: "Os produtos não encontrados foram retirados da lista",
       });
+
       navigation.navigate("ProductList");
     } catch (err) {
       console.log(err);
