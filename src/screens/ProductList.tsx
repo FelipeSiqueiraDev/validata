@@ -5,7 +5,6 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Modal,
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
@@ -13,42 +12,35 @@ import { AntDesign } from "@expo/vector-icons";
 
 import { api } from "../services/axios";
 
-import { productProps } from "./RegisterProduct";
 import ProductCard from "../components/ProductCard";
-import FilterModal from "../components/FilterModal";
+import { productProps } from "./RegisterProduct";
 import { AppSettingsContext } from "../contexts/settings";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export default function ProductList() {
+  const navigation = useNavigation();
   const [validateList, setValidateList] = useState<productProps[]>();
-  const [modalVisible, setModalVisible] = useState(false);
   const [emptyList, setEmptyList] = useState("Carregando...");
-  const { company, filter } = useContext(AppSettingsContext);
+  const { company, filter, dateFilter } = useContext(AppSettingsContext);
 
   async function getValidateList() {
-    let validateListData = "";
-
     try {
-      if (!filter) {
-        validateListData = JSON.stringify({
-          EqualityFilter: {
-            StatusId: ["0"],
-            EmpresaId: [String(company?.EmpresaId)],
-          },
-          Sort: ["SecaoLabel"],
-          Take: 20,
-        });
-      } else {
-        validateListData = JSON.stringify({
-          EqualityFilter: {
-            StatusId: ["0"],
-            EmpresaId: [String(company?.EmpresaId)],
-            SecaoId: [String(filter?.filterId)],
-          },
-          Sort: ["SecaoLabel"],
-          Take: 20,
-        });
-      }
+      const validateListData = JSON.stringify({
+        EqualityFilter: {
+          StatusId: ["0"],
+          EmpresaId: [String(company?.EmpresaId)],
+          ...(filter?.filterId && { SecaoId: [String(filter?.filterId)] }),
+        },
+        ...(dateFilter?.initialDate && {
+          Criteria: [
+            [["VencimentoIndicadoDt"], ">=", dateFilter.initialDate],
+            "and",
+            [["VencimentoIndicadoDt"], "<", dateFilter.finalDate],
+          ],
+        }),
+        Sort: ["SecaoLabel"],
+        Take: 20,
+      });
 
       const settings = {
         method: "post",
@@ -100,7 +92,7 @@ export default function ProductList() {
           >
             <TouchableOpacity
               style={styles.filterButton}
-              onPress={() => setModalVisible(true)}
+              onPress={() => navigation.navigate("FiltersRoutes")}
             >
               <AntDesign name="filter" size={28} color={"#FFF"} />
             </TouchableOpacity>
@@ -121,6 +113,13 @@ export default function ProductList() {
         </Animatable.View>
 
         <Animatable.View animation={"fadeInUp"} style={styles.listContainer}>
+          {dateFilter ? (
+            <Text style={styles.filterStyle}>
+              Próximos {dateFilter?.periodName}
+            </Text>
+          ) : (
+            <Text style={styles.filterStyle}></Text>
+          )}
           <FlatList
             data={validateList}
             showsVerticalScrollIndicator={false}
@@ -148,13 +147,6 @@ export default function ProductList() {
             )}
           />
         </Animatable.View>
-        <Modal
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(!modalVisible)}
-          transparent
-        >
-          <FilterModal setModalVisible={setModalVisible} />
-        </Modal>
       </View>
     </>
   );
@@ -200,5 +192,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     justifyContent: "center",
+  },
+  filterStyle: {
+    textAlign: "center",
+    fontSize: 15,
+    marginTop: 5,
+    color: "#A1A1A1",
   },
 });

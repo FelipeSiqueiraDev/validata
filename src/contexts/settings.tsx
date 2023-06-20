@@ -10,14 +10,23 @@ import saveFilterCredentials, {
   saveFilterProps,
 } from "../storage/filter/saveFilter.credentials";
 import deleteFilterCredentials from "../storage/filter/deleteFilter.credentials";
+import { dateFilterProps } from "../screens/FilterDate";
+import saveDateFilterCredentials, {
+  filterDateProps,
+} from "../storage/filter/saveDateFilter.credentials";
+import getDateFilterCredentials from "../storage/filter/getDateFilter.credentials";
+import deleteDateFilterCredentials from "../storage/filter/deleteDateFilter.credentials";
 
 type AppSettingsContextData = {
   saveCompany: ({ EmpresaId, EmpresaNome }) => Promise<void>;
   getCompany: () => Promise<void>;
   saveFilter: ({ Id, Nome }) => Promise<void>;
   deleteFilter: () => Promise<void>;
+  saveDateFilter: ({ initialDate, finalDate, periodName }) => Promise<void>;
+  deleteDateFilter: () => Promise<void>;
   company: companyProps;
   filter: saveFilterProps;
+  dateFilter: filterDateProps;
   isLoading: boolean;
 };
 
@@ -33,6 +42,7 @@ export function AppSettingsProvider({ children }: ProviderProps) {
   const navigation = useNavigation();
   const [company, setCompany] = useState<companyProps>();
   const [filter, setFilter] = useState<saveFilterProps>();
+  const [dateFilter, setDateFilter] = useState<filterDateProps>();
   const [isLoading, setIsLoading] = useState(true);
   async function saveCompany({ EmpresaId, EmpresaNome }: companyProps) {
     await saveCompanyCredentials({ EmpresaId, EmpresaNome });
@@ -80,6 +90,26 @@ export function AppSettingsProvider({ children }: ProviderProps) {
     navigation.navigate("ProductList");
   }
 
+  async function saveDateFilter({
+    initialDate,
+    finalDate,
+    periodName,
+  }: filterDateProps) {
+    await saveDateFilterCredentials({ initialDate, finalDate, periodName });
+    setDateFilter({ initialDate, finalDate, periodName });   
+
+    navigation.navigate("ProductList");
+  }
+
+  async function deleteDateFilter() {
+    try {
+      await deleteDateFilterCredentials();
+      setDateFilter(undefined);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     getCompany();
   }, []);
@@ -91,8 +121,11 @@ export function AppSettingsProvider({ children }: ProviderProps) {
         getCompany,
         saveFilter,
         deleteFilter,
+        saveDateFilter,
+        deleteDateFilter,
         company,
         filter,
+        dateFilter,
         isLoading,
       }}
     >

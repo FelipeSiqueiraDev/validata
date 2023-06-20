@@ -11,6 +11,7 @@ export declare global {
       ProductScreen: productProps;
       Settings: undefined;
       AppScreens: undefined;
+      FiltersRoutes: undefined;
     }
   }
 }
