@@ -112,7 +112,7 @@ export default function FilterDate() {
 
       <Animatable.View animation={"fadeInUp"} style={styles.containerNew}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <KeyboardAvoidingView style={{ height: 600 }}>
+          <KeyboardAvoidingView style={{ height: 550 }}>
             <>
               <Controller
                 name="periods"
