@@ -1,12 +1,9 @@
-import { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Modal } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { productProps } from "../screens/RegisterProduct";
 
 import { useNavigation } from "@react-navigation/native";
 
 import * as Animatable from "react-native-animatable";
-import { AntDesign } from "@expo/vector-icons";
-import NotFoundModal from "./NotFoundModal";
 
 type cardProps = {
   product: productProps;
@@ -48,7 +45,7 @@ export default function ProductCard({ product, index }: cardProps) {
                 Vencimento:
               </Text>
               <Text style={styles.validateText}>
-                {new Date(product.VencimentoIndicadoDt).toLocaleDateString()}
+                {new Date(product.VencimentoIndicadoDt).toLocaleDateString("pt-BR")}
               </Text>
             </View>
           </View>          

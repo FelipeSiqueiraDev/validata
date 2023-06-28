@@ -29,7 +29,7 @@ type validateProps = {
 export default function ProductScreen() {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [ean, setEan] = useState(true)
+  const [ean, setEan] = useState(true);
 
   const navigation = useNavigation();
   const data = useRoute();
@@ -52,7 +52,7 @@ export default function ProductScreen() {
 
     if (!expiration) {
       formatedDate = String(
-        new Date(prodData.VencimentoIndicadoDt).toLocaleDateString()
+        new Date(prodData.VencimentoIndicadoDt).toLocaleDateString("pt-BR")
       );
     } else formatedDate = expiration;
 
@@ -102,13 +102,13 @@ export default function ProductScreen() {
     if (!quantity) {
       formatedQuantity = String(prodData.VencimentoIndicadoQt);
     } else formatedQuantity = quantity;
-
+    
     try {
       const productData = {
         Entity: {
           RelatoValidadeVerificacaoId: prodData.RelatoValidadeVerificacaoId,
           VencimentoEncontradoQt: formatedQuantity,
-          VencimentoIndicadoDt: formatedDate,
+          VencimentoEncontradoDt: formatedDate,
         },
       };
       const settings = {
@@ -138,15 +138,15 @@ export default function ProductScreen() {
     }
   }
 
-  function eanVerify(){
-    if (String(prodData.ProdutoEan) == "0000000000000"){
-      setEan(false)
+  function eanVerify() {
+    if (String(prodData.ProdutoEan) == "0000000000000") {
+      setEan(false);
     }
   }
 
   useEffect(() => {
-    eanVerify()
-  }, [])
+    eanVerify();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -165,9 +165,13 @@ export default function ProductScreen() {
 
       <Animatable.View animation={"fadeInUp"} style={styles.listContainer}>
         <Text style={styles.message}>{prodData.ProdutoNome}</Text>
-        <View style={{flexDirection: 'row', justifyContent: 'flex-start'}}>
-          <Text style={[styles.info, {marginRight: 40}]}>Cod.: {prodData.ProdutoId}</Text>
-          <Text style={styles.info}>{ean ? `Ean.: ${prodData.ProdutoEan}` : ""}</Text>
+        <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+          <Text style={[styles.info, { marginRight: 40 }]}>
+            Cod.: {prodData.ProdutoId}
+          </Text>
+          <Text style={styles.info}>
+            {ean ? `Ean.: ${prodData.ProdutoEan}` : ""}
+          </Text>
         </View>
         <View>
           <Text style={[styles.label, { marginTop: 50 }]}>Quantidade</Text>
@@ -209,10 +213,14 @@ export default function ProductScreen() {
               <TextInputMask
                 type="datetime"
                 placeholder={String(
-                  new Date(prodData.VencimentoIndicadoDt).toLocaleDateString()
+                  new Date(prodData.VencimentoIndicadoDt).toLocaleDateString(
+                    "pt-BR"
+                  )
                 )}
                 defaultValue={String(
-                  new Date(prodData.VencimentoIndicadoDt).toLocaleDateString()
+                  new Date(prodData.VencimentoIndicadoDt).toLocaleDateString(
+                    "pt-BR"
+                  )
                 )}
                 placeholderTextColor={"#000"}
                 onChangeText={onChange}

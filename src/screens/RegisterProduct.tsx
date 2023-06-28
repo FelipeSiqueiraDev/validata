@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -25,6 +25,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { AxiosRequestConfig } from "axios";
 import { api } from "../services/axios";
 import Toast from "react-native-toast-message";
+import { AppSettingsContext } from "../contexts/settings";
 
 const schema = yup.object({
   productId: yup.string().required("O produto é obrigatório!"),
@@ -39,6 +40,8 @@ export type registerProps = {
 };
 
 export type productProps = {
+  Id?: string;
+  Nome?: string;
   EmpresaId?: number;
   EntradaDt?: string;
   EntradaQt?: number;
@@ -64,6 +67,7 @@ export default function RegisterProduct() {
   );
   const [searchText, setSearchText] = useState("");
   const debouncedSearchTerm = useDebounce(searchText, 1000);
+  const { company } = useContext(AppSettingsContext);
 
   const {
     control,
@@ -173,7 +177,7 @@ export default function RegisterProduct() {
           ProdutoId: String(productData.productId),
           VencimentoInicialQt: String(productData.productQtd),
           DataId: String(productData.productDate),
-          EmpresaId: String(60),
+          EmpresaId: String(company.EmpresaId),
         },
       };
       const settings = {

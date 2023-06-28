@@ -38,7 +38,7 @@ export default function CheckProductCard({ product, index }: cardProps) {
               Vencimento:
             </Text>
             <Text style={styles.validateText}>
-              {new Date(product.VencimentoFinalDt).toLocaleDateString()}
+              {new Date(product.DataId).toLocaleDateString("pt-BR")}
             </Text>
           </View>
         </View>

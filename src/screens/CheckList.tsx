@@ -20,6 +20,7 @@ export type checkProps = {
   ProdutoId: number;
   VencimentoFinalDt: string;
   VencimentoFinalQt: number;
+  DataId: string;
 };
 
 export default function CheckList() {
@@ -66,7 +67,6 @@ export default function CheckList() {
       >
         <View style={{ paddingStart: 10 }}>
           <Text style={styles.message}>Produtos Verificados</Text>
-          {/* <Text style={styles.companyName}>{company?.EmpresaNome}</Text> */}
         </View>
       </Animatable.View>
 

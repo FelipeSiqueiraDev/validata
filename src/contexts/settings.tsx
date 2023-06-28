@@ -10,11 +10,10 @@ import saveFilterCredentials, {
   saveFilterProps,
 } from "../storage/filter/saveFilter.credentials";
 import deleteFilterCredentials from "../storage/filter/deleteFilter.credentials";
-import { dateFilterProps } from "../screens/FilterDate";
 import saveDateFilterCredentials, {
   filterDateProps,
 } from "../storage/filter/saveDateFilter.credentials";
-import getDateFilterCredentials from "../storage/filter/getDateFilter.credentials";
+
 import deleteDateFilterCredentials from "../storage/filter/deleteDateFilter.credentials";
 
 type AppSettingsContextData = {
