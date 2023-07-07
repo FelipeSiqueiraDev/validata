@@ -84,7 +84,6 @@ export default function RegisterProduct() {
         ContainsText: searchText,
         EqualityFilter: {
           Excluido: false,
-          ForaLinha: false,
         },
       };
       const settings: AxiosRequestConfig = {
@@ -94,6 +93,8 @@ export default function RegisterProduct() {
         },
         data: filters,
       };
+
+      console.log(filters);
 
       await api("/Services/Default/Produto/List", settings)
         .then((res) => {

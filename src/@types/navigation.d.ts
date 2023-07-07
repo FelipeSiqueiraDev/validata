@@ -12,6 +12,7 @@ export declare global {
       Settings: undefined;
       AppScreens: undefined;
       FiltersRoutes: undefined;
+      FollowupPage: checkProps;
     }
   }
 }

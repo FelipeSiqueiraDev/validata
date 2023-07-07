@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import * as Animatable from "react-native-animatable";
 import { checkProps } from "../screens/CheckList";
+import { useNavigation } from "@react-navigation/native";
 
 type cardProps = {
   product: checkProps;
@@ -9,6 +10,7 @@ type cardProps = {
 };
 
 export default function CheckProductCard({ product, index }: cardProps) {
+  const navigation = useNavigation();
   return (
     <Animatable.View
       style={[styles.container, { paddingStart: 0 }]}
@@ -19,7 +21,7 @@ export default function CheckProductCard({ product, index }: cardProps) {
       <TouchableOpacity
         style={styles.container}
         activeOpacity={1}
-        onPress={() => console.log("Nada acontece por aqui!")}
+        onPress={() => navigation.navigate("FollowupPage", product)}
       >
         <View style={styles.containerDetail} />
         <View style={styles.containerHeader}>
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: 160,
-    backgroundColor: "#393B41",
+    backgroundColor: "#181818",
     borderWidth: 1,
     borderColor: "#ECA400",
     marginBottom: 20,

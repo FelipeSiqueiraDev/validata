@@ -91,7 +91,7 @@ export default function Settings() {
 
   useEffect(() => {
     getCompanies();
-    setValue("company", company)
+    setValue("company", company);
   }, []);
 
   return (
@@ -121,7 +121,9 @@ export default function Settings() {
             <Dropdown
               data={companies}
               value={value}
+              //@ts-ignore
               valueField={"EmpresaId"}
+              //@ts-ignore
               labelField={"EmpresaNome"}
               onChange={onChange}
               search

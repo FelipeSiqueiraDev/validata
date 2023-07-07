@@ -1,18 +1,27 @@
-import { Dispatch, SetStateAction, useContext } from "react";
-import { StyleSheet, TouchableOpacity, Text, SafeAreaView } from "react-native";
+import { Dispatch, SetStateAction } from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
+  Linking,
+} from "react-native";
 
 import * as Animatable from "react-native-animatable";
-import { AuthContext } from "../contexts/auth";
 
 type logoutModalVisible = {
   setModalVisible: Dispatch<SetStateAction<boolean>>;
+  email: string;
 };
 
-export default function LogoutModal({ setModalVisible }: logoutModalVisible) {
-  const { logout } = useContext(AuthContext);
-  async function getOut() {
+export default function SendEmail({
+  setModalVisible,
+  email,
+}: logoutModalVisible) {
+
+  async function handleSendEmail() {
     try {
-      await logout();
+      Linking.openURL(email);
     } catch (err) {
       console.log(err);
     }
@@ -29,9 +38,9 @@ export default function LogoutModal({ setModalVisible }: logoutModalVisible) {
         <TouchableOpacity
           activeOpacity={0.9}
           style={styles.actionButton}
-          onPress={getOut}
+          onPress={handleSendEmail}
         >
-          <Text style={styles.actionText}>Sair da Conta</Text>
+          <Text style={styles.actionText}>Enviar Email</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
