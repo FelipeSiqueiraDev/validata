@@ -229,11 +229,15 @@ export type VerifyedProduct = {
 
 export default function FollowupPage() {
   const navigation = useNavigation();
+
   const [modalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState("");
+  const [ean, setEan] = useState(true);
+  const [daysLeft, setDaysLeft] = useState<number>(0);
+
   const data = useRoute();
   const prodData = data.params as checkProps;
-  const [ean, setEan] = useState(true);
+
   const [product, setProduct] = useState<VerifyedProduct>({
     Entity: {},
   } as VerifyedProduct);
@@ -300,7 +304,187 @@ export default function FollowupPage() {
           </View>
 
           <View style={{ marginTop: 20 }}>
-            <Text style={styles.sectionTitle}> Informações de Vencimento </Text>
+            <Text style={styles.sectionTitle}> Informações do produto</Text>
+
+            <View
+              style={{ width: "100%", height: 1, backgroundColor: "#ECA400" }}
+            />
+
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                  fontWeight: "900",
+                }}
+              >
+                Loja:{" "}
+              </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                }}
+              >
+                {product.Entity.EmpresaNome?.split("FV.")}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                  fontWeight: "900",
+                }}
+              >
+                Departamento:{" "}
+              </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                }}
+              >
+                {product.Entity.Departamento?.Nome}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                  fontWeight: "900",
+                }}
+              >
+                Seção:{" "}
+              </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                }}
+              >
+                {product.Entity.Secao?.Id} -{" "}
+              </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                }}
+              >
+                {product.Entity.Secao?.Nome}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text style={{ color: "#FFF", fontSize: 15, fontWeight: "900" }}>
+                Categoria:{" "}
+              </Text>
+              <Text style={{ color: "#FFF", fontSize: 15 }}>
+                {product.Entity.Categoria?.Id} -{" "}
+              </Text>
+              <Text style={{ color: "#FFF", fontSize: 15 }}>
+                {product.Entity.Categoria?.Nome}
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text style={{ color: "#FFF", fontSize: 15, fontWeight: "900" }}>
+                Subcategoria:{" "}
+              </Text>
+              <Text style={{ color: "#FFF", fontSize: 15 }}>
+                {product.Entity.SubCategoria?.Id} -{" "}
+              </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 12,
+                  width: 200,
+                  alignSelf: "center",
+                }}
+              >
+                {product.Entity.SubCategoria?.Nome}
+              </Text>
+            </View>
+
+            <View
+              style={{ flexDirection: "row", marginBottom: 5, marginTop: 10 }}
+            >
+              <View style={{ width: "50%", flexDirection: "row" }}>
+                <Text
+                  style={{ color: "#FFF", fontSize: 15, fontWeight: "900" }}
+                >
+                  Embalagem:{" "}
+                </Text>
+                <Text style={{ color: "#FFF", fontSize: 15 }}>
+                  {product.Entity.Produto?.Embalagem}
+                </Text>
+              </View>
+
+              <View style={{ width: "50%", flexDirection: "row" }}>
+                <Text
+                  style={{ color: "#FFF", fontSize: 15, fontWeight: "900" }}
+                >
+                  Unidade:{" "}
+                </Text>
+                <Text style={{ color: "#FFF", fontSize: 15 }}>
+                  {product.Entity.Produto?.Unidade}
+                </Text>
+              </View>
+            </View>
+
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                  fontWeight: "900",
+                }}
+              >
+                Fornecedor:{" "}
+              </Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                  width: "80%",
+                }}
+              >
+                {product.Entity.Fornecedor?.Nome}
+              </Text>
+            </View>
+            <View style={{ flexDirection: "row", marginTop: 10 }}>
+              <Text style={{ color: "#FFF", fontSize: 15, fontWeight: "900" }}>
+                ID fornecedor:{" "}
+              </Text>
+              <Text style={{ color: "#FFF", fontSize: 15 }}>
+                {product.Entity.Fornecedor?.Id}
+              </Text>
+            </View>
+
+            <View
+              style={{ flexDirection: "row", marginTop: 10, marginBottom: 2 }}
+            >
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontSize: 15,
+                  marginTop: 2,
+                  fontWeight: "900",
+                }}
+              >
+                CNPJ fornecedor:{"  "}
+              </Text>
+              <Text style={{ color: "#FFF", fontSize: 15, marginTop: 2 }}>
+                {product.Entity.Fornecedor?.CNPJ}
+              </Text>
+            </View>
+          </View>
+
+          <View style={{ marginTop: 20 }}>
+            <Text style={styles.sectionTitle}> Informações do vencimento </Text>
 
             <View
               style={{ width: "100%", height: 1, backgroundColor: "#ECA400" }}
@@ -324,6 +508,45 @@ export default function FollowupPage() {
               >
                 {new Date(product.Entity.DataId).toLocaleDateString("pt-BR")}
               </Text>
+
+              {Number(
+                new Date(product.Entity.DataId)
+                  .toLocaleDateString("pt-BR")
+                  .split("/")[0]
+              ) -
+                Number(new Date().toLocaleDateString("pt-BR").split("/")[0]) >
+              0 ? (
+                <Text
+                  style={{
+                    color: "#A1A1A1",
+                    fontSize: 10,
+                    alignSelf: "flex-end",
+                    marginLeft: 50,
+                  }}
+                >
+                  Faltam{" "}
+                  {Number(
+                    new Date(product.Entity.DataId)
+                      .toLocaleDateString("pt-BR")
+                      .split("/")[0]
+                  ) -
+                    Number(
+                      new Date().toLocaleDateString("pt-BR").split("/")[0]
+                    )}{" "}
+                  dias
+                </Text>
+              ) : (
+                <Text
+                  style={{
+                    color: "#A1A1A1",
+                    fontSize: 10,
+                    alignSelf: "flex-end",
+                    marginLeft: 50,
+                  }}
+                >
+                  Este produto já venceu
+                </Text>
+              )}
             </View>
 
             <View style={{ flexDirection: "row", marginTop: 10 }}>
@@ -342,7 +565,7 @@ export default function FollowupPage() {
                 Custo de compra:{" "}
               </Text>
               <Text style={{ color: "#FFF", fontSize: 15 }}>
-                R${product.Entity.CustoTotalFinalVlr}
+                R${product.Entity.CustoTotalFinalVlr?.toFixed(2)}
               </Text>
             </View>
 
@@ -353,7 +576,7 @@ export default function FollowupPage() {
                 Valor de venda:{" "}
               </Text>
               <Text style={{ color: "#FFF", fontSize: 15 }}>
-                R${product.Entity.PrecoCustoFinalVlr}
+                R${product.Entity.PrecoCustoFinalVlr?.toFixed(2)}
               </Text>
             </View>
 
@@ -364,80 +587,9 @@ export default function FollowupPage() {
                 Giro Diario:{" "}
               </Text>
               <Text style={{ color: "#FFF", fontSize: 15 }}>
-                {product.Entity.GiroDiarioFinalQt}
+                {product.Entity.GiroDiarioFinalQt?.toFixed(2)}
               </Text>
             </View>
-          </View>
-
-          <View style={{ marginTop: 15 }}>
-            <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-              <Text style={styles.sectionTitle}> Fornecedor </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  position: "absolute",
-                  right: 10,
-                }}
-              >
-                <Text
-                  style={{
-                    color: "#A1A1A1",
-                    fontSize: 12,
-                    fontWeight: "900",
-                  }}
-                >
-                  ID:{"  "}
-                </Text>
-                <Text
-                  style={{ color: "#A1A1A1", fontSize: 12, fontWeight: "900" }}
-                >
-                  {product.Entity.Fornecedor?.Id}
-                </Text>
-              </View>
-            </View>
-
-            <View
-              style={{ width: "100%", height: 1, backgroundColor: "#ECA400" }}
-            />
-          </View>
-
-          <View style={{ flexDirection: "row", marginTop: 10 }}>
-            <Text
-              style={{
-                color: "#FFF",
-                fontSize: 15,
-                fontWeight: "900",
-              }}
-            >
-              Nome:{" "}
-            </Text>
-            <Text
-              style={{
-                color: "#FFF",
-                fontSize: 15,
-                width: "87%",
-              }}
-            >
-              {product.Entity.Fornecedor?.Nome}
-            </Text>
-          </View>
-
-          <View
-            style={{ flexDirection: "row", marginTop: 10, marginBottom: 2 }}
-          >
-            <Text
-              style={{
-                color: "#FFF",
-                fontSize: 15,
-                marginTop: 2,
-                fontWeight: "900",
-              }}
-            >
-              CNPJ:{"  "}
-            </Text>
-            <Text style={{ color: "#FFF", fontSize: 15, marginTop: 2 }}>
-              {product.Entity.Fornecedor?.CNPJ}
-            </Text>
           </View>
 
           <View style={{ marginTop: 20 }}>
@@ -452,7 +604,7 @@ export default function FollowupPage() {
               }}
             />
 
-            {product.Entity.NotasList ? (
+            {product.Entity.NotasList?.length > 0 ? (
               product.Entity.NotasList.map((prod) => [
                 <TouchableOpacity
                   key={product.Entity.NotasList.toLocaleString()}
@@ -486,25 +638,39 @@ export default function FollowupPage() {
                       {prod.InsertUserDisplayName[0].toUpperCase() +
                         prod.InsertUserDisplayName.substring(1)}
                     </Text>
-                    <Text
-                      style={{
-                        color: "#FFF",
-                        marginStart: 5,
-                        marginBottom: 2,
-                        fontSize: 12,
-                        fontWeight: "600",
-                      }}
-                    >
-                      {new Date(prod.InsertDate).toLocaleDateString("pt-BR")}
-                    </Text>
+
+                    <View style={{ flexDirection: "row" }}>
+                      <Text
+                        style={{
+                          color: "#FFF",
+                          marginStart: 5,
+                          marginBottom: 2,
+                          fontSize: 11,
+                          fontWeight: "600",
+                        }}
+                      >
+                        {new Date(prod.InsertDate).toLocaleDateString("pt-BR")}
+                      </Text>
+                      <Text
+                        style={{
+                          color: "#FFF",
+                          marginStart: 5,
+                          marginBottom: 2,
+                          fontSize: 11,
+                          fontWeight: "600",
+                        }}
+                      >
+                        {String(prod.InsertDate).split("T")[1].split(".")[0]}
+                      </Text>
+                    </View>
                   </View>
                   <Text
                     style={{
                       color: "#FFF",
                       marginStart: 5,
                       marginBottom: 2,
-                      marginTop: 10,
                       fontSize: 15,
+                      marginTop: 5,
                     }}
                   >
                     {prod.Historico}
@@ -512,16 +678,27 @@ export default function FollowupPage() {
                 </TouchableOpacity>,
               ])
             ) : (
-              <Text>Não tem notasList</Text>
+              <Text
+                style={{
+                  color: "#FFF",
+                  textAlign: "center",
+                  fontSize: 20,
+                  fontWeight: "900",
+                  marginTop: 15,
+                  marginBottom: 20,
+                }}
+              >
+                Não há notas
+              </Text>
             )}
           </View>
 
           <TouchableOpacity
-            style={{ flexDirection: "row", width: "100%" }}
+            style={{ flexDirection: "row", width: "100%", marginTop: 20 }}
             onPress={() => {
               setModalVisible(true);
               setEmail(
-                `mailto: ${product.Entity.GerenteEmpresa?.Username}@farid.com.br, ${product.Entity.Responsavel?.Username}@farid.com.br`
+                `mailto: ${product.Entity.GerenteEmpresa?.Email}, ${product.Entity.GerenteProduto?.Email}, ${product.Entity.Responsavel?.Email}`
               );
             }}
           >
@@ -532,19 +709,18 @@ export default function FollowupPage() {
                 alignItems: "flex-start",
               }}
             >
-              <Text style={[styles.detailText, { marginTop: 20 }]}>
-                Loja:{" "}
-                {product.Entity.Empresa?.Nome.split(".")[1][0] +
-                  product.Entity.Empresa?.Nome.split(".")[1]
-                    .substring(1)
-                    .toLowerCase()}
-              </Text>
-
               <Text style={styles.detailText}>
                 Gerente da loja:{" "}
                 {product.Entity.GerenteEmpresa?.DisplayName.split(" ")[0] +
                   " " +
                   product.Entity.GerenteEmpresa?.DisplayName.split(" ")[1]}
+              </Text>
+
+              <Text style={styles.detailText}>
+                Gerente do produto:{" "}
+                {product.Entity.GerenteProduto?.DisplayName.split(" ")[0] +
+                  " " +
+                  product.Entity.GerenteProduto?.DisplayName.split(" ")[1]}
               </Text>
 
               <Text style={styles.detailText}>
@@ -627,8 +803,9 @@ const styles = StyleSheet.create({
   },
   detailText: {
     color: "#A1A1A1",
-    fontSize: 15,
+    fontSize: 13,
     marginBottom: 5,
+    width: "100%",
   },
   sectionTitle: {
     fontSize: 20,
